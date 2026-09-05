@@ -27,10 +27,10 @@ export const emailSender: EmailSender = {
   // NOTE: "Dummy" provider is just for local development purposes.
   //   Make sure to check the server logs for the email confirmation url (it will not be sent to an address)!
   //   Once you are ready for production, switch to e.g. "SendGrid" or "Mailgun" providers. Check out https://docs.opensaas.sh/guides/email-sending/ .
-  provider: "Dummy",
+  provider: "Resend",
   defaultFrom: {
-    name: "Open SaaS App", // → "Eco Pulse"
+    name: "Eco Pulse", // → "Eco Pulse"
     // When using a real provider, e.g. SendGrid, you must use the same email address that you configured your account to send out emails with!
-    email: "me@example.com", // → an address you control, once you go live
+    email: "onboarding@resend.dev", // → an address you control, once you go live
   },
 };
