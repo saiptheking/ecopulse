@@ -1,2 +1,5 @@
 node_modules/
 .wasp/
+.env
+.env.*
+!.env.example
