@@ -1,0 +1,166 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// OBITEACH: schema.prisma — YOUR DATABASE (the source of truth for tables)
+// ═══════════════════════════════════════════════════════════════════════════
+// Each `model` = a database table. Each field = a column. Prisma reads this
+// file and gives you a typed client: `prisma.user.create({...})`,
+// `prisma.submission.findMany(...)`, etc. — no SQL needed.
+//
+// ⚠️ IMPORTANT Wasp 0.25 GOTCHA:
+//   Wasp INJECTS extra auth models (Auth, AuthIdentity, Session) into the
+//   schema it actually uses. That generated schema lives at
+//   `.wasp/out/db/schema.prisma` — IT is the real source of truth for the DB,
+//   NOT this file. That's why `wasp db migrate-dev` can behave strangely;
+//   if the DB is missing auth tables, run Prisma directly:
+//     npx prisma migrate dev --schema .wasp/out/db/schema.prisma
+//
+// COMMON FIELD TYPES (memorize these):
+//   String @id @default(uuid())  → unique ID, auto-generated
+//   DateTime @default(now())     → timestamp, set automatically
+//   Boolean @default(false)      → on/off flag
+//   Int                          → whole number
+//   User @relation(...)          → foreign key: "this row belongs to that user"
+//   X[]                          → "a user has MANY of these" (one-to-many)
+//
+// ┌─ ECO PULSE ROADMAP ─────────────────────────────────────────────────────┐
+// │ KEEP:    User, File (uploaded proof photos!)                            │
+// │ STUDY:   Task — the simplest "belongs to a user" model. Your Challenge  │
+// │          and Submission models will look a lot like it.                 │
+// │ DELETE:  GptResponse, DailyStats, PageViewSource, Logs,                 │
+// │          ContactFormMessage + the payment fields on User                │
+// │ ADD:     Challenge (title, emoji, points, impactCo2, due...) and        │
+// │          Submission (description, photo, status pending/approved/...)   │
+// └──────────────────────────────────────────────────────────────────────────┘
+// ═══════════════════════════════════════════════════════════════════════════
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // ← filled from .env.server
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// The User table — one row per account. Wasp's auth feature REQUIRES this
+// model to exist and be named "User" (see auth.wasp.ts: userEntity: "User").
+model User {
+  id                        String          @id @default(uuid()) // auto-generated unique id
+  createdAt                 DateTime        @default(now()) // set once, when the row is created
+
+  // ── set by the signup flow (src/auth/userSignupFields.ts) ──
+  name                      String?         
+  email                     String?         @unique // used to log in (Dummy provider in dev)
+  username                  String?         @unique // used to log in (Dummy provider in dev)
+  isAdmin                   Boolean         @default(false) // controls /admin access (KEEP!)
+  grade                     Int             @default(9)
+  points                    Int             @default(0)
+
+  // 🔥 PAYMENT FIELDS — DELETE all of these for Eco Pulse (lines 18-23):
+  paymentProcessorUserId    String?         @unique
+  lemonSqueezyCustomerPortalUrl String?     // You can delete this if you're not using Lemon Squeezy as your payments processor.
+  subscriptionStatus        String?         // 'active', 'cancel_at_period_end', 'past_due', 'deleted'
+  subscriptionPlan          String?         // 'hobby', 'pro'
+  datePaid                  DateTime?
+  credits                   Int             @default(3)
+
+  // ── "relations": a User can have MANY of each of these ──
+  // ⚠️ Don't delete relation fields until you delete BOTH sides (Prisma
+  // requires every @relation to have its opposite field).
+  gptResponses            GptResponse[] // 🔥 DELETE later, together with the GptResponse model
+  contactFormMessages     ContactFormMessage[] // 🔥 DELETE later, together with ContactFormMessage
+  tasks                   Task[] // 🔥 DELETE later, together with the Task model
+  files                   File[] // KEEP — uploaded proof photos for Eco Pulse!
+  // ← ADD: officer flag helper (e.g. `isOfficer Boolean @default(false)`)
+  //        + submissions SubmittedSubmission[] when you create Submission
+}
+
+// 🔥 DEMO-ONLY MODEL — DELETE for Eco Pulse (the AI chat demo feature).
+model GptResponse {
+  id                        String          @id @default(uuid())
+  createdAt                 DateTime        @default(now())
+  updatedAt                 DateTime        @updatedAt // auto-updates on every change
+
+  user                      User            @relation(fields: [userId], references: [id])
+  userId                    String // foreign key column (links to User.id)
+
+  content                   String
+}
+
+// ⭐ STUDY THIS MODEL — your Challenge will look almost identical!
+// It's the template for "a thing that belongs to a user." For Eco Pulse,
+// Challenge stands alone (no user relation) and looks like:
+//   id, title, emoji, points, impactCo2, dueDate, active
+model Task {
+  id                        String          @id @default(uuid())
+  createdAt                 DateTime        @default(now())
+
+  user                      User            @relation(fields: [userId], references: [id])
+  userId                    String
+
+  description               String
+  time                      String          @default("1") // default value if not provided
+  isDone                    Boolean         @default(false)
+}
+
+// KEEP — this is your photo-proof model! A student uploads a picture of
+// their eco action → a File row is created → Submission links to it.
+model File {
+  id                        String          @id @default(uuid())
+  createdAt                 DateTime        @default(now())
+
+  user                      User            @relation(fields: [userId], references: [id])
+  userId                    String
+
+  name                      String // original filename (e.g. "bike-ride.jpg")
+  type                      String // MIME type (e.g. "image/jpeg")
+  s3Key                     String // where the file lives in storage (S3 or local)
+}
+
+// 🔥 ANALYTICS-ONLY MODELS — DELETE all three below for Eco Pulse.
+// (Used by the admin analytics dashboard + src/analytics/*.)
+model DailyStats {
+  id                               Int             @id @default(autoincrement()) // 1, 2, 3...
+  date                             DateTime        @default(now()) @unique
+
+  totalViews                       Int             @default(0)
+  prevDayViewsChangePercent        String          @default("0")
+  userCount                        Int             @default(0)
+  paidUserCount                    Int             @default(0)
+  userDelta                        Int             @default(0)
+  paidUserDelta                    Int             @default(0)
+  totalRevenue                     Float           @default(0)
+  totalProfit                      Float           @default(0)
+
+  sources                          PageViewSource[]
+}
+
+model PageViewSource {
+  @@id([date, name]) // composite primary key: (date + name) together is unique
+  name                     String
+  date                     DateTime        @default(now())
+
+  dailyStats               DailyStats?     @relation(fields: [dailyStatsId], references: [id])
+  dailyStatsId             Int?
+
+  visitors                 Int
+}
+
+model Logs {
+  id                       Int             @id @default(autoincrement())
+  createdAt                DateTime        @default(now())
+
+  message                  String
+  level                    String
+}
+
+// 🔥 DELETE — the "contact us" form from the landing page.
+model ContactFormMessage {
+  id                        String          @id @default(uuid())
+  createdAt                 DateTime        @default(now())
+
+  user                      User            @relation(fields: [userId], references: [id])
+  userId                    String
+
+  content                   String
+  isRead                    Boolean         @default(false)
+  repliedAt                 DateTime?
+}
