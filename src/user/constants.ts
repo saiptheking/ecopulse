@@ -35,11 +35,4 @@ export const userMenuItems = [
     isAuthRequired: false,
     isAdminOnly: false,
   },
-  {
-    name: "Admin Dashboard", // 🔥 → "Officer Dashboard" (guard by isOfficer)
-    to: routes.AdminRoute.to,
-    icon: Shield,
-    isAuthRequired: false,
-    isAdminOnly: true,
-  },
 ] as const;
