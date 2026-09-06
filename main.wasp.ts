@@ -59,7 +59,7 @@ import { paymentSpec } from "./src/payment/payment.wasp"; // 🔥 DELETE (Stripe
 import { emailSender } from "./src/server/emailSender.wasp"; // email provider (dev: Dummy)
 import { userSpec } from "./src/user/user.wasp"; // account page + admin-fields ops (KEEP)
 import { api, apiNamespace} from "@wasp.sh/spec"
-import { configureFileUploadMiddleware, uploadFile } from "./src/apis" with { type: "ref" }
+import { configureFileUploadMiddleware, uploadFile, approveSubmission } from "./src/apis" with { type: "ref" }
 
 export default app({
   name: "EcoPulse", // → change to "EcoPulse"
@@ -88,7 +88,15 @@ export default app({
     // improving SEO, search engine/AI crawling, and performance: https://wasp.sh/docs/advanced/prerendering
     route("LandingPageRoute", "/", page(LandingPage), { prerender: true }), // homepage at /
     apiNamespace("/api/upload", { middlewareConfigFn: configureFileUploadMiddleware }),
-    api("POST", "/api/upload", uploadFile),
+    api("POST", "/api/upload", uploadFile, {
+      entities: ["User", "Submission"],
+    }),
+    api(
+      "GET",
+      "/api/submissions/approve",
+      approveSubmission,
+      { entities: ["Submission", "User"] },
+    ),
     route("NotFoundRoute", "*", page(NotFoundPage)), // catch-all 404
     authSpec,
     userSpec,

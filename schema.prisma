@@ -39,7 +39,21 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+enum SubmissionStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+model Submission {
+  id                        String          @id @default(uuid()) // auto-generated unique id
+  createdAt                 DateTime        @default(now()) // set once, when the row is created
+  status                    SubmissionStatus @default(PENDING)
+  fileName                  String
+  approvalTokenHash         String          @unique
+  user                      User            @relation(fields: [userId], references: [id])
+  userId                    String          
 
+}
 // The User table — one row per account. Wasp's auth feature REQUIRES this
 // model to exist and be named "User" (see auth.wasp.ts: userEntity: "User").
 model User {
@@ -53,6 +67,7 @@ model User {
   isAdmin                   Boolean         @default(false) // controls /admin access (KEEP!)
   grade                     Int             @default(9)
   points                    Int             @default(0)
+  submissions               Submission[]
 
   // 🔥 PAYMENT FIELDS — DELETE all of these for Eco Pulse (lines 18-23):
   paymentProcessorUserId    String?         @unique
