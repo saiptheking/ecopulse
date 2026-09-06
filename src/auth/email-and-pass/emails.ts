@@ -22,10 +22,10 @@ import {
 export const getVerificationEmailContent: GetVerificationEmailContentFn = ({
   verificationLink, // ← Wasp passes this in
 }) => ({
-  subject: "Verify your email",
-  text: `Click the link below to verify your email: ${verificationLink}`,
+  subject: "Welcome to Eco Pulse! Please verify your email",
+  text: `You are one step away from saving the world! Click the link below to verify your email: ${verificationLink}`,
   html: `
-        <p>Click the link below to verify your email</p>
+        <p>You are one step away from saving the world! Click the link below to verify your email!</p>
         <a href="${verificationLink}">Verify email</a>
     `,
 });
