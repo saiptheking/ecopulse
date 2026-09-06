@@ -14,69 +14,43 @@
 // collect a display name by building a custom signup form (same approach as
 // LoginPage's customization).
 // ═══════════════════════════════════════════════════════════════════════════
-import { login, signup } from 'wasp/client/auth'
-
-import { useState } from 'react'
-import { useNavigate } from 'react-router'
+import { SignupForm } from "wasp/client/auth";
+import { Link as WaspRouterLink, routes } from "wasp/client/router";
+import { AuthPageLayout } from "./AuthPageLayout";
+import { useRedirectIfLoggedIn } from "./hooks/useRedirectIfLoggedIn";
 
 export function SignupPage() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [grade, setGrade] = useState(0)
-  const [error, setError] = useState<Error | null>(null)
-  const navigate = useNavigate()
-
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    setError(null)
-    try {
-      await signup({ 
-        email, 
-        password, 
-        name,
-        grade,
-        username: email, // username column = the email (simplest approach)
-        isAdmin: false, // power users by env var (see src/auth/userSignupFields.ts) 
-      })
-      navigate('/')
-    } catch (error: unknown) {
-      setError(error as Error)
-    }
-  }
+  useRedirectIfLoggedIn();
 
   return (
-    <form onSubmit={handleSubmit}>
-      {error && <p>Error: {error.message}</p>}
-      <input
-        type="text"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="Name"
-        required
+    <AuthPageLayout>
+      <SignupForm 
+        additionalFields={[
+          {
+            name: "name",
+            label: "Full Name",
+            type: "input",
+            validations: { required: "Full name is required" },
+        }, {
+            name: "grade",
+            label: "Grade",
+            type: "input",
+            validations: { 
+              required: "Grade is required",
+              min: { value: 9, message: "Grade must be at least 9" },
+              max: { value: 12, message: "Grade must be at most 12" }
+            }
+        }]}
       />
-      <input
-        type="number"
-        value={grade}
-        onChange={(e) => setGrade(parseInt(e.target.value))}
-        placeholder="Grade"
-        required
-      />
-      <input
-        type="text"
-        autoComplete="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="Email"
-      />
-      <input
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="Password"
-      />
-      
-      <button type="submit">Sign Up</button>
-    </form>
-  )
+      <br />
+      <span className="text-sm font-medium text-gray-900">
+        I already have an account (
+        <WaspRouterLink to={routes.LoginRoute.to} className="underline">
+          go to login
+        </WaspRouterLink>
+        ).
+      </span>
+      <br />
+    </AuthPageLayout>
+  );
 }

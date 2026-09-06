@@ -48,7 +48,7 @@ const nameDataSchema = z.object({
   name: z.string(),
 });
 const gradeDataSchema = z.object({
-  grade: z.int(),
+  grade: z.coerce.number().int().min(9).max(12),
 });
 
 // ★ THE ACTIVE ONE — how every normal signup fills the User row:
