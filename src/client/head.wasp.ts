@@ -28,7 +28,7 @@ export const head: App["head"] = [
   "<meta name='description' content='A gamified environmental action platform' />", // → write a real one for Eco Pulse
   "<meta name='author' content='Eco Pulse' />",
   "<meta name='keywords' content='environment, sustainability, gamification' />", // → eco, environment, gamification
-
+  "<meta name='google-site-verification' content='OENn6OG9nct29VFTnJg-QMKAsYNwcAbR06kE_iR8R6o' />",
   // ── Open Graph: the preview card when someone shares your URL ──
   "<meta property='og:type' content='website' />",
   "<meta property='og:title' content='Eco Pulse' />", // → "Eco Pulse"
