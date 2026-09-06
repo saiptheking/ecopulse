@@ -39,7 +39,6 @@ export function SignupPage() {
         username: email, // username column = the email (simplest approach)
         isAdmin: false, // power users by env var (see src/auth/userSignupFields.ts) 
       })
-      await login({ email, password })
       navigate('/')
     } catch (error: unknown) {
       setError(error as Error)
