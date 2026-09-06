@@ -22,19 +22,19 @@
 import { type App } from "@wasp.sh/spec";
 
 export const head: App["head"] = [
-  "<link rel='icon' href='/favicon.ico' />", // browser-tab icon
+  "<link rel='icon' href='https://www.svgrepo.com/show/513512/leaf.svg' />", // browser-tab icon
 
   // ── SEO: what search engines show under your app's name ──
-  "<meta name='description' content='Your apps main description and features.' />", // → write a real one for Eco Pulse
-  "<meta name='author' content='Your (App) Name' />",
-  "<meta name='keywords' content='saas, solution, product, app, service' />", // → eco, environment, gamification
+  "<meta name='description' content='A gamified environmental action platform' />", // → write a real one for Eco Pulse
+  "<meta name='author' content='Eco Pulse' />",
+  "<meta name='keywords' content='environment, sustainability, gamification' />", // → eco, environment, gamification
 
   // ── Open Graph: the preview card when someone shares your URL ──
   "<meta property='og:type' content='website' />",
-  "<meta property='og:title' content='Your Open SaaS App' />", // → "Eco Pulse"
-  "<meta property='og:site_name' content='Your Open SaaS App' />",
-  "<meta property='og:url' content='https://your-saas-app.com' />", // → your real domain
-  "<meta property='og:description' content='Your apps main description and features.' />",
+  "<meta property='og:title' content='Eco Pulse' />", // → "Eco Pulse"
+  "<meta property='og:site_name' content='Eco Pulse' />",
+  "<meta property='og:url' content='https://ecopulse-dev.vercel.app' />", // → your real domain
+  "<meta property='og:description' content='A gamified environmental action platform' />",
   "<meta property='og:image' content='https://your-saas-app.com/public-banner.webp' />", // → your banner image
 
   // ── Twitter card: same idea, for Twitter/X previews ──
