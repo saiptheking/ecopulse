@@ -10,7 +10,7 @@
 // Beta!", "Demo Day is coming!") or delete this file + its usage in
 // NavBar.tsx if you don't want a banner.
 // ═══════════════════════════════════════════════════════════════════════════
-const ANNOUNCEMENT_URL = "https://github.com/wasp-lang/wasp"; // 🔥 change to your repo
+const ANNOUNCEMENT_URL = "https://github.com/saiptheking/ecopulse"; // 🔥 change to your repo
 
 export function Announcement() {
   return (
