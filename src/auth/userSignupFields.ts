@@ -42,7 +42,13 @@ function isAdminEmail(email: string): boolean {
 
 // For email auth, the "data" is simply { email: string } from the form:
 const emailDataSchema = z.object({
-  email: z.string(),
+  email: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .refine((value) => /@k12\.ipsd\.org$/i.test(value),
+      "Only K12 IPSD emails are allowed."
+    ),
 });
 const nameDataSchema = z.object({
   name: z.string(),
