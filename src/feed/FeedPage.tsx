@@ -210,7 +210,7 @@ function TaskCard({
     <Card className={cn("border-2", priorityColor)}>
       <CardHeader className="pb-3">
         <CardTitle className="flex items-center justify-between text-base">
-          <span>{task.name}</span>
+          <span>{task.name}(5kg CO2 Saved)</span>
           {task.time !== undefined && (
             <span className="text-muted-foreground text-xs font-normal">
               {task.time} hrs
