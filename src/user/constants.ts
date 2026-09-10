@@ -29,7 +29,7 @@ export const userMenuItems = [
     isAuthRequired: true,
   },
   {
-    name: "Account Settings", // KEEP — the account page is yours
+    name: "Account Info", // KEEP — the account page is yours
     to: routes.AccountRoute.to,
     icon: Settings,
     isAuthRequired: false,

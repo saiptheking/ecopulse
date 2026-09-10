@@ -44,6 +44,7 @@ function generateMockUserData(): MockUserData {
     username: faker.internet.userName({ firstName, lastName }),
     grade: faker.number.int({ min: 9, max: 12 }),
     points: faker.number.int({ min: 0, max: 1000 }),
+    impactCo2: faker.number.int({ min: 0, max: 1000 }),
     createdAt,
     isAdmin: false,
     credits,

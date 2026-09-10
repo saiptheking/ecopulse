@@ -73,7 +73,7 @@ export const approveSubmission: ApproveSubmission = async (req, res, context) =>
   });
   await context.entities.User.update({
     where: { id: submission.userId },
-    data: { points: { increment: 100 } }, // Award 100 points for approved submission
+    data: { points: { increment: 100 }, impactCo2: { increment: 5 } }, // Award 100 points and 5 kg CO2 for approved submission
   });
   res.send("Submission approved and user points updated.");
 }

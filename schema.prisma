@@ -68,7 +68,7 @@ model User {
   grade                     Int             @default(9)
   points                    Int             @default(0)
   submissions               Submission[]
-
+  impactCo2                 Float           @default(0)
   // 🔥 PAYMENT FIELDS — DELETE all of these for Eco Pulse (lines 18-23):
   paymentProcessorUserId    String?         @unique
   lemonSqueezyCustomerPortalUrl String?     // You can delete this if you're not using Lemon Squeezy as your payments processor.
@@ -76,7 +76,7 @@ model User {
   subscriptionPlan          String?         // 'hobby', 'pro'
   datePaid                  DateTime?
   credits                   Int             @default(3)
-
+  
   // ── "relations": a User can have MANY of each of these ──
   // ⚠️ Don't delete relation fields until you delete BOTH sides (Prisma
   // requires every @relation to have its opposite field).
