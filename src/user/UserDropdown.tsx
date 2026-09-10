@@ -42,7 +42,7 @@ export function UserDropdown({ user }: { user: Partial<UserEntity> }) {
       <DropdownMenuTrigger asChild>
         <button className="text-foreground hover:text-primary flex items-center transition-colors duration-300 ease-in-out">
           <span className="text-foreground mr-2 hidden text-right text-sm font-medium lg:block">
-            {user.name} {/* shows the logged-in username */}
+            Welcome, {user.name}! {/* shows the logged-in username */}
           </span>
           <User className="size-5" />
           <ChevronDown className="size-4" />
