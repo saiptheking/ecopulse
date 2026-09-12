@@ -52,6 +52,11 @@ export function Hero() {
                   Get Started <span aria-hidden="true">→</span>
                 </WaspRouterLink>
               </Button>
+              <Button size="lg" variant="outline" asChild>
+                <a href="https://saiprasadvalada.wixsite.com/ecopulse" target="_blank" rel="noopener noreferrer">
+                  Learn More <span aria-hidden="true"></span>
+                </a>
+              </Button>
             </div>
           </div>
           {/* APP SCREENSHOT — light version (shown in light mode) */}

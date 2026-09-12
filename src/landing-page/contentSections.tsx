@@ -136,11 +136,11 @@ export const faqs = [
 // ── Footer link groups: TWO columns (app / company) ───────────────────────
 export const footerNavigation = {
   app: [
-    { name: "Documentation", href: DocsUrl },
-    { name: "Blog", href: BlogUrl },
+    { name: "Documentation", href: "" },
+    { name: "Blog", href: "" },
   ],
   company: [
-    { name: "About", href: "https://wasp.sh" },
+    { name: "About", href: "https://saiprasadvalada.wixsite.com/ecopulse" },
     { name: "Privacy", href: "#" },
     { name: "Terms of Service", href: "#" },
   ],

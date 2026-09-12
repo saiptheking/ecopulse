@@ -38,23 +38,6 @@ export function Footer({
         </h2>
         <div className="mt-10 flex items-start justify-end gap-20">
           {/* Column 1: "App" links */}
-          <div>
-            <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
-              App
-            </h3>
-            <ul role="list" className="mt-6 space-y-4">
-              {footerNavigation.app.map((item) => (
-                <li key={item.name}>
-                  <a
-                    href={item.href}
-                    className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-white"
-                  >
-                    {item.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
           {/* Column 2: "Company" links */}
           <div>
             <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
