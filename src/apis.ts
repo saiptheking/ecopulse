@@ -48,6 +48,34 @@ export const uploadFile: UploadFile = async (req, res, context) => {
       <a href="${approvalUrl}">Approve Submission</a>
     `,
   })
+  const dbUser = await context.entities.User.findUnique({
+    where: { id: user.id },
+  });
+  if (!dbUser) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
+  const today = new Date();
+  today.setUTCHours(0, 0, 0, 0);
+  const yesterday = new Date(today);
+  yesterday.setUTCHours(0, 0, 0, 0);
+  yesterday.setDate(yesterday.getUTCDate() - 1);
+  const lastStreakDay = dbUser.lastStreakDate ? new Date(dbUser.lastStreakDate) : null;
+  lastStreakDay?.setUTCHours(0, 0, 0, 0);
+  let newStreak = 0;
+  if (!dbUser.lastStreakDate) {
+    newStreak = 1;
+  } else {
+    if (dbUser.lastStreakDate.getTime() !== today.getTime()) {
+      newStreak = lastStreakDay?.getTime() === yesterday.getTime() ? dbUser.streak + 1 : 1;
+    }
+  }
+  await context.entities.User.update({
+      where: { id: dbUser.id },
+      data: { lastStreakDate: today, 
+      streak: newStreak === 0 ? dbUser.streak : newStreak
+     }
+  });
   return res.json({
     fileExists: !!file,
     tokenHash,

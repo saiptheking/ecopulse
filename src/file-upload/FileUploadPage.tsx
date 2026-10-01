@@ -49,7 +49,6 @@
 // ═══════════════════════════════════════════════════════════════════════════
 import { useState } from "react";
 import { api } from "wasp/client/api";
-
 export const FileUploadPage = () => {
   const [name, setName] = useState("");
   const [file, setFile] = useState<File>();
@@ -65,7 +64,6 @@ export const FileUploadPage = () => {
       .json<{ fileExists: boolean }>();
     alert("Thank you for your submission! Your file has been uploaded successfully.");
   };
-
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-foreground mt-2 text-4xl font-bold tracking-tight sm:text-5xl">File Upload</h1>

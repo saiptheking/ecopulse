@@ -33,7 +33,7 @@ import {
   createFileUploadUrl,
   deleteFile,
   getAllFilesByUser,
-  getDownloadFileSignedURL,
+  getDownloadFileSignedURL
 } from "./operations" with { type: "ref" };
 
 export const fileUploadSpec: Spec = [

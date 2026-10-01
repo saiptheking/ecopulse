@@ -45,6 +45,8 @@ function generateMockUserData(): MockUserData {
     grade: faker.number.int({ min: 9, max: 12 }),
     points: faker.number.int({ min: 0, max: 1000 }),
     impactCo2: faker.number.int({ min: 0, max: 1000 }),
+    streak: faker.number.int({ min: 0, max: 30 }),
+    lastStreakDate: faker.date.between({ from: createdAt, to: now }),
     createdAt,
     isAdmin: false,
     credits,

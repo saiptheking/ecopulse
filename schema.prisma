@@ -69,6 +69,8 @@ model User {
   points                    Int             @default(0)
   submissions               Submission[]
   impactCo2                 Float           @default(0)
+  streak                    Int             @default(0)
+  lastStreakDate            DateTime?       @db.Date
   // 🔥 PAYMENT FIELDS — DELETE all of these for Eco Pulse (lines 18-23):
   paymentProcessorUserId    String?         @unique
   lemonSqueezyCustomerPortalUrl String?     // You can delete this if you're not using Lemon Squeezy as your payments processor.
