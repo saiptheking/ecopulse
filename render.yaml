@@ -7,8 +7,9 @@ services:
     region: oregon
     branch: main
     buildCommand: >-
+      export NPM_CONFIG_PREFIX=$HOME/.npm-global &&
+      export PATH="$NPM_CONFIG_PREFIX/bin:$PATH" &&
       npm install -g @wasp.sh/wasp-cli@0.25 &&
-      export PATH="$(npm prefix -g)/bin:$PATH" &&
       wasp install &&
       wasp build &&
       cd .wasp/out/server &&
