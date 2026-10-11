@@ -19,11 +19,7 @@ export function LeaderboardPage() {
         <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-lg leading-8">
           Under development leaderboard page!
         </p>
-        <Card className="bg-muted/10 my-8">
-          <CardContent className="mx-auto my-8 space-y-10 px-6 py-0 sm:w-[90%] md:w-[70%] lg:w-[50%]">
             <LeaderboardContent />
-          </CardContent>
-        </Card>
       </div>
     </div>
   );
