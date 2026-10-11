@@ -36,7 +36,6 @@ function LeaderboardContent() {
       <div className="flex flex-col gap-6 py-0" data-testid="schedule">
         <h2 className="text-4xl font-bold sm:text-4xl text-center mt-0">{grade === null ? "All Grades" : `${grade}th Grade`}</h2>
         <div className="flex justify-center gap-4"> 
-          <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(null)}}>All</button>
           <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(9)}}>9th Grade</button>
           <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(10)}}>10th Grade</button>
           <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(11)}}>11th Grade</button>
@@ -59,9 +58,6 @@ function LeaderboardEntry({ name, points, grade, rank }: { name: string | null; 
             <span className="font-bold whitespace-nowrap ml-2">
               {name ?? "No name"}
             </span>
-            </span>
-            <span className="font-normal">
-              {`${grade}th grade`}
             </span>
             <span className=" font-normal">
               {points} points
