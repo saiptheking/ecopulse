@@ -23,9 +23,11 @@
 import { useEffect, useMemo } from "react";
 import { Outlet, useLocation } from "react-router";
 import { routes } from "wasp/client/router";
+import { useAuth } from 'wasp/client/auth';
 import { Toaster } from "../client/components/ui/toaster";
 import "./Main.css"; // global CSS (Tailwind + custom styles)
 import { NavBar } from "./components/NavBar/NavBar";
+import OneSignal from 'react-onesignal';
 import {
   staticNavigationItems,
 } from "./components/NavBar/constants";
@@ -72,6 +74,22 @@ export function App() {
       }
     }
   }, [location]);
+
+  // Initialize OneSignal
+  const { data: user } = useAuth();
+  useEffect(() => {
+    const appId = import.meta.env.VITE_ONESIGNAL_APP_ID;
+    if (!appId) return;
+    OneSignal.init({  
+      appId: String(appId), // replace with your actual OneSignal app ID
+      allowLocalhostAsSecureOrigin: true 
+    });
+      if (user) {
+    OneSignal.login(String(user.id));
+  } else {
+    OneSignal.logout();
+  }
+  }, [user]);
 
   return (
     <>

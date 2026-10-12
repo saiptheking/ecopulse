@@ -3,6 +3,7 @@ import type { UploadFile, ApproveSubmission } from "wasp/server/api";
 import multer from "multer";
 import crypto from "node:crypto";
 import { emailSender } from "wasp/server/email";
+import OneSignal from "react-onesignal";
 const upload = multer({ 
   storage: multer.memoryStorage()
  });
@@ -76,6 +77,21 @@ export const uploadFile: UploadFile = async (req, res, context) => {
       streak: newStreak === 0 ? dbUser.streak : newStreak
      }
   });
+  await fetch("https://api.onesignal.com/notifications", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": `Key ${process.env.ONESIGNAL_REST_API_KEY}`
+    },
+    body: JSON.stringify({
+      app_id: process.env.ONESIGNAL_APP_ID,
+    include_aliases: {
+      external_id: [String(user.id)],
+    },
+      target_channel: "push",
+      contents: { en: "Your submission has been received!" }
+    })
+    })
   return res.json({
     fileExists: !!file,
     tokenHash,
@@ -103,5 +119,20 @@ export const approveSubmission: ApproveSubmission = async (req, res, context) =>
     where: { id: submission.userId },
     data: { points: { increment: 100 }, impactCo2: { increment: 5 } }, // Award 100 points and 5 kg CO2 for approved submission
   });
+  await fetch("https://api.onesignal.com/notifications", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      "Authorization": `Key ${process.env.ONESIGNAL_REST_API_KEY}`
+    },
+    body: JSON.stringify({
+      app_id: process.env.ONESIGNAL_APP_ID,
+    include_aliases: {
+      external_id: [String(submission.userId)],
+    },
+      target_channel: "push",
+      contents: { en: "Your submission has been approved!" }
+    })
+    })
   res.send("Submission approved and user points updated.");
 }
