@@ -83,7 +83,8 @@ export function App() {
     OneSignal.init({  
       appId: String(appId), // replace with your actual OneSignal app ID
       allowLocalhostAsSecureOrigin: true 
-    });
+    });}, [])
+  useEffect(() => {
       if (user) {
     OneSignal.login(String(user.id));
   } else {
