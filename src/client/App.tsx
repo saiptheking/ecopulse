@@ -81,7 +81,7 @@ export function App() {
     const appId = import.meta.env.VITE_ONESIGNAL_APP_ID;
     if (!appId) return;
     OneSignal.init({  
-      appId: String(appId), // replace with your actual OneSignal app ID
+      appId: String("3baa380b-c098-47f3-a786-ecc33c5c6f88"), // replace with your actual OneSignal app ID
       allowLocalhostAsSecureOrigin: true 
     });}, [])
   useEffect(() => {
