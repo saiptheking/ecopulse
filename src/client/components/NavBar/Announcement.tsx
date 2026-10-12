@@ -14,7 +14,7 @@ const ANNOUNCEMENT_URL = "https://github.com/saiptheking/ecopulse"; // 🔥 chan
 
 export function Announcement() {
   return (
-    <div className="from-accent to-secondary text-primary-foreground bg-linear-to-r relative flex w-full items-center justify-center gap-3 p-3 text-center font-semibold">
+    <div className="from-accent to-secondary text-primary-foreground bg-linear-to-r relative flex w-full items-center justify-center gap-3 p-3 text-center font-semibold" id="announcement-banner">
       <a
         href={ANNOUNCEMENT_URL}
         target="_blank"
