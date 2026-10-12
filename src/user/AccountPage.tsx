@@ -25,6 +25,7 @@ import { getCustomerPortalUrl, useQuery } from "wasp/client/operations"; // 🔥
 import { Link as WaspRouterLink, routes } from "wasp/client/router"; // 🔥 only if BuyMoreButton stays
 import type { User } from "wasp/entities";
 import { Button } from "../client/components/ui/button";
+import { logout } from "wasp/client/auth";
 import {
   Card,
   CardContent,
@@ -146,11 +147,29 @@ export function AccountPage({ user }: { user: User }) {
                   </div>
                 </div>
               </div>
-              
-            
+              <div className="px-6 py-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
+                  <div className="text-muted-foreground text-sm font-medium">
+                    Streak
+                  </div>
+                  <div className="text-foreground mt-1 text-sm sm:col-span-2 sm:mt-0">
+                    {user.streak ? `${user.streak} days` : "No streak"}
+                  </div>
+                </div>
+              </div>
           </div>
         </CardContent>
+        <CardHeader>
+                              <button
+                  type="button"
+                  onClick={() => logout()}
+                  className="px-4 py-2 text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2 p-4 "
+                >
+                  Log Out
+                </button>
+        </CardHeader>
       </Card>
+
     </div>
   );
 }
