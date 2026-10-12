@@ -147,16 +147,6 @@ export function AccountPage({ user }: { user: User }) {
                   </div>
                 </div>
               </div>
-              <div className="px-6 py-4">
-                <div className="grid grid-cols-1 sm:grid-cols-3 sm:gap-4">
-                  <div className="text-muted-foreground text-sm font-medium">
-                    Streak
-                  </div>
-                  <div className="text-foreground mt-1 text-sm sm:col-span-2 sm:mt-0">
-                    {user.streak ? `${user.streak} days` : "No streak"}
-                  </div>
-                </div>
-              </div>
           </div>
         </CardContent>
         <CardHeader>
