@@ -76,21 +76,25 @@ export function App() {
   }, [location]);
 
   // Initialize OneSignal
-  const { data: user } = useAuth();
+  const { data: user, isLoading, error } = useAuth();
   useEffect(() => {
     const appId = import.meta.env.VITE_ONESIGNAL_APP_ID;
     if (!appId) return;
     OneSignal.init({  
-      appId: String("3baa380b-c098-47f3-a786-ecc33c5c6f88"), // replace with your actual OneSignal app ID
+      appId: String(appId), // replace with your actual OneSignal app ID
       allowLocalhostAsSecureOrigin: true 
     });}, [])
   useEffect(() => {
-      if (user) {
+      if (isLoading) {
+        console.log("OneSignal user context is loading")
+  } else if (error) {
+        console.log("OneSignal user context has an error")
+  } else if (user) {
     OneSignal.login(String(user.id));
-  } else {
-    OneSignal.logout();
+  } else if (!user) {
+    console.log("OneSignal user context is not available")
   }
-  }, [user]);
+  }, [isLoading, error, user?.id]);
 
   return (
     <>
