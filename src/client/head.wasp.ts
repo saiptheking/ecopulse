@@ -38,6 +38,8 @@ export const head: App["head"] = [
   "<meta property='og:image' content='https://your-saas-app.com/public-banner.webp' />", // → your banner image
   "<script src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js' defer></script>",
   "<script src='/onesignal-init.js' defer></script>",
+  "<script src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js' defer></script>",
+  "<script>window.OneSignalDeferred = window.OneSignalDeferred || [];OneSignalDeferred.push(async function(OneSignal) {await OneSignal.init({appId: '3baa380b-c098-47f3-a786-ecc33c5c6f88',safari_web_id: 'web.onesignal.auto.4d1813bb-fb28-4cd6-9039-144582b81585',notifyButton: {enable: true,},});});</script>",
   // ── Twitter card: same idea, for Twitter/X previews ──
   "<meta name='twitter:image' content='https://your-saas-app.com/public-banner.webp' />",
   "<meta name='twitter:image:width' content='800' />",

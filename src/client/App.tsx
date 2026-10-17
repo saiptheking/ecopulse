@@ -80,16 +80,40 @@ export function App() {
   useEffect(() => {
     const appId = import.meta.env.VITE_ONESIGNAL_APP_ID;
     if (!appId) return;
-    OneSignal.init({  
-      appId: String(appId), // replace with your actual OneSignal app ID
-      allowLocalhostAsSecureOrigin: true 
-    });}, [])
+        if (typeof window !== 'undefined') {
+      OneSignal.init({
+        appId: appId,
+        notifyButton: {
+              enable: true,
+    prenotify: false,
+    showCredit: false,
+    text: {
+      "tip.state.unsubscribed": "Subscribe to notifications",
+      "tip.state.subscribed": "You're subscribed to notifications",
+      "tip.state.blocked": "Notifications are blocked",
+      "message.prenotify": "Click to subscribe to notifications",
+      "message.action.subscribed": "Thanks for subscribing!",
+      "message.action.subscribing": "Thanks for subscribing!",
+      "message.action.resubscribed": "You're subscribed to notifications",
+      "message.action.unsubscribed": "You won't receive notifications",
+      "dialog.main.title": "Manage notifications",
+      "dialog.main.button.subscribe": "SUBSCRIBE",
+      "dialog.main.button.unsubscribe": "UNSUBSCRIBE",
+      "dialog.blocked.title": "Unblock notifications",
+      "dialog.blocked.message": "Follow your browser's instructions to allow notifications.",
+    },
+        },
+        serviceWorkerPath: "/OneSignalSDKWorker.js",
+    serviceWorkerParam: { scope: "/" },
+      });
+  }}, []);
   useEffect(() => {
       if (isLoading) {
         console.log("OneSignal user context is loading")
   } else if (error) {
         console.log("OneSignal user context has an error")
   } else if (user) {
+    console.log("OneSignal user context is available, logging in user with ID:", user.id)
     OneSignal.login(String(user.id));
   } else if (!user) {
     console.log("OneSignal user context is not available")

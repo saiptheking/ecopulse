@@ -3,7 +3,8 @@ import type { UploadFile, ApproveSubmission } from "wasp/server/api";
 import multer from "multer";
 import crypto from "node:crypto";
 import { emailSender } from "wasp/server/email";
-import OneSignal from "react-onesignal";
+import Onesignal from '@onesignal/node-onesignal';
+import { randomUUID } from 'node:crypto';
 const upload = multer({ 
   storage: multer.memoryStorage()
  });
@@ -77,21 +78,41 @@ export const uploadFile: UploadFile = async (req, res, context) => {
       streak: newStreak === 0 ? dbUser.streak : newStreak
      }
   });
-  await fetch("https://api.onesignal.com/notifications", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Authorization": `Key ${process.env.ONESIGNAL_REST_API_KEY}`
-    },
-    body: JSON.stringify({
-      app_id: process.env.ONESIGNAL_APP_ID,
-    include_aliases: {
-      external_id: [String(user.id)],
-    },
-      target_channel: "push",
-      contents: { en: "Your submission has been received!" }
-    })
-    })
+  const configuration = Onesignal.createConfiguration({
+    restApiKey: process.env.ONESIGNAL_REST_API_KEY,
+});
+  const apiInstance = new Onesignal.DefaultApi(configuration);
+  const notification = new Onesignal.Notification();
+notification.app_id = String(process.env.ONESIGNAL_APP_ID);
+notification.contents = { en: 'Submission Recieved!' };
+notification.headings = { en: 'Push Notification' };
+notification.include_aliases = { external_id: [String(user.id)] };
+notification.target_channel = 'push';
+notification.idempotency_key = randomUUID();
+try {
+  const response = await apiInstance.createNotification(notification);
+  // `response.id` discriminates the two HTTP 200 shapes. A falsy value (empty string,
+  // null, or undefined) means no notification was created (e.g. all targets were
+  // unreachable / not subscribed). `response.errors` is polymorphic: a `string[]` in the
+  // no-subscribers case, or an object keyed by recipient-identifier type
+  // (`invalid_player_ids`, `invalid_external_user_ids`, `invalid_aliases`, …) when the
+  // notification WAS created but some recipients were skipped.
+  if (!response.id) {
+    console.warn("Notification was not sent:", response.errors);
+  } else if (response.errors) {
+    console.log("Notification created:", response.id, "(partial failures:", response.errors, ")");
+  } else {
+    console.log("Notification created:", response.id);
+  }
+} catch (e) {
+  if (e instanceof Onesignal.ApiException) {
+    // `e.errorMessages` flattens any error-envelope shape to a `string[]`;
+    // the raw parsed body remains on `e.body`.
+    console.error("createNotification failed: HTTP " + e.code, e.errorMessages);
+  } else {
+    throw e;
+  }
+}
   return res.json({
     fileExists: !!file,
     tokenHash,
