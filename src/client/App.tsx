@@ -24,7 +24,6 @@ import { useEffect, useMemo } from "react";
 import { Outlet, useLocation } from "react-router";
 import { routes } from "wasp/client/router";
 import { useAuth } from 'wasp/client/auth';
-import Median from 'median-js-bridge';
 import { Toaster } from "../client/components/ui/toaster";
 import "./Main.css"; // global CSS (Tailwind + custom styles)
 import { NavBar } from "./components/NavBar/NavBar";
@@ -88,9 +87,10 @@ export function App() {
     } else if (user) {
     console.log("OneSignal user context is available, logging in user with ID:", user.id)
           const initializeOneSignal = async () => {
-      if (await Median.isNativeApp()) {
+            const medianOneSignal = window.median?.onesignal;
+      if (medianOneSignal) {
         try {
-        const result = await Median.onesignal.login(user.id)
+        const result = await medianOneSignal.login(user.id)
         } catch (error) {
           console.error("Error logging in user with OneSignal:", error);
         }
