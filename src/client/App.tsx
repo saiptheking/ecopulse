@@ -24,6 +24,7 @@ import { useEffect, useMemo } from "react";
 import { Outlet, useLocation } from "react-router";
 import { routes } from "wasp/client/router";
 import { useAuth } from 'wasp/client/auth';
+import Median from 'median-js-bridge';
 import { Toaster } from "../client/components/ui/toaster";
 import "./Main.css"; // global CSS (Tailwind + custom styles)
 import { NavBar } from "./components/NavBar/NavBar";
@@ -78,45 +79,26 @@ export function App() {
   // Initialize OneSignal
   const { data: user, isLoading, error } = useAuth();
   useEffect(() => {
-    const appId = import.meta.env.VITE_ONESIGNAL_APP_ID;
-    if (!appId) return;
-        if (typeof window !== 'undefined') {
-      OneSignal.init({
-        appId: appId,
-        notifyButton: {
-              enable: true,
-    prenotify: false,
-    showCredit: false,
-    text: {
-      "tip.state.unsubscribed": "Subscribe to notifications",
-      "tip.state.subscribed": "You're subscribed to notifications",
-      "tip.state.blocked": "Notifications are blocked",
-      "message.prenotify": "Click to subscribe to notifications",
-      "message.action.subscribed": "Thanks for subscribing!",
-      "message.action.subscribing": "Thanks for subscribing!",
-      "message.action.resubscribed": "You're subscribed to notifications",
-      "message.action.unsubscribed": "You won't receive notifications",
-      "dialog.main.title": "Manage notifications",
-      "dialog.main.button.subscribe": "SUBSCRIBE",
-      "dialog.main.button.unsubscribe": "UNSUBSCRIBE",
-      "dialog.blocked.title": "Unblock notifications",
-      "dialog.blocked.message": "Follow your browser's instructions to allow notifications.",
-    },
-        },
-        serviceWorkerPath: "/OneSignalSDKWorker.js",
-    serviceWorkerParam: { scope: "/" },
-      });
-  }}, []);
-  useEffect(() => {
-      if (isLoading) {
+    if (isLoading) {
         console.log("OneSignal user context is loading")
   } else if (error) {
         console.log("OneSignal user context has an error")
-  } else if (user) {
-    console.log("OneSignal user context is available, logging in user with ID:", user.id)
-    OneSignal.login(String(user.id));
   } else if (!user) {
     console.log("OneSignal user context is not available")
+    } else if (user) {
+    console.log("OneSignal user context is available, logging in user with ID:", user.id)
+          const initializeOneSignal = async () => {
+      if (await Median.isNativeApp()) {
+        try {
+        const result = await Median.onesignal.login(user.id)
+        } catch (error) {
+          console.error("Error logging in user with OneSignal:", error);
+        }
+        } else {
+          await OneSignal.login(String(user.id));
+        }
+      }
+    void initializeOneSignal();
   }
   }, [isLoading, error, user?.id]);
 

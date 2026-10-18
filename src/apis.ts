@@ -86,17 +86,11 @@ export const uploadFile: UploadFile = async (req, res, context) => {
 notification.app_id = String(process.env.ONESIGNAL_APP_ID);
 notification.contents = { en: 'Submission Recieved!' };
 notification.headings = { en: 'Push Notification' };
-notification.include_aliases = { external_id: [String(user.id)] };
+notification.include_aliases = { external_id: [String(user.id)] } as any;
 notification.target_channel = 'push';
 notification.idempotency_key = randomUUID();
 try {
   const response = await apiInstance.createNotification(notification);
-  // `response.id` discriminates the two HTTP 200 shapes. A falsy value (empty string,
-  // null, or undefined) means no notification was created (e.g. all targets were
-  // unreachable / not subscribed). `response.errors` is polymorphic: a `string[]` in the
-  // no-subscribers case, or an object keyed by recipient-identifier type
-  // (`invalid_player_ids`, `invalid_external_user_ids`, `invalid_aliases`, …) when the
-  // notification WAS created but some recipients were skipped.
   if (!response.id) {
     console.warn("Notification was not sent:", response.errors);
   } else if (response.errors) {
