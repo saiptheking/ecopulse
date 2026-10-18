@@ -142,7 +142,7 @@ export const approveSubmission: ApproveSubmission = async (req, res, context) =>
 notification.app_id = String(process.env.ONESIGNAL_APP_ID);
 notification.contents = { en: 'Your submission has been approved, and you have been awarded 100 points!' };
 notification.headings = { en: 'Submission Approved!' };
-notification.include_aliases = { external_id: [String(user.id)] } as any;
+notification.include_aliases = { external_id: [String(submission.userId)] } as any;
 notification.target_channel = 'push';
 notification.idempotency_key = randomUUID();
 try {
@@ -163,4 +163,4 @@ try {
     throw e;
   }
   res.send("Submission approved and user points updated.");
-}
+}}
