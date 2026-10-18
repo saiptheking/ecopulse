@@ -84,8 +84,8 @@ export const uploadFile: UploadFile = async (req, res, context) => {
   const apiInstance = new Onesignal.DefaultApi(configuration);
   const notification = new Onesignal.Notification();
 notification.app_id = String(process.env.ONESIGNAL_APP_ID);
-notification.contents = { en: 'Submission Recieved!' };
-notification.headings = { en: 'Push Notification' };
+notification.contents = { en: 'Your submission has been received and has been sent to the review team.' };
+notification.headings = { en: 'Submission Received!' };
 notification.include_aliases = { external_id: [String(user.id)] } as any;
 notification.target_channel = 'push';
 notification.idempotency_key = randomUUID();
@@ -134,20 +134,33 @@ export const approveSubmission: ApproveSubmission = async (req, res, context) =>
     where: { id: submission.userId },
     data: { points: { increment: 100 }, impactCo2: { increment: 5 } }, // Award 100 points and 5 kg CO2 for approved submission
   });
-  await fetch("https://api.onesignal.com/notifications", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json; charset=utf-8",
-      "Authorization": `Key ${process.env.ONESIGNAL_REST_API_KEY}`
-    },
-    body: JSON.stringify({
-      app_id: process.env.ONESIGNAL_APP_ID,
-    include_aliases: {
-      external_id: [String(submission.userId)],
-    },
-      target_channel: "push",
-      contents: { en: "Your submission has been approved!" }
-    })
-    })
+    const configuration = Onesignal.createConfiguration({
+    restApiKey: process.env.ONESIGNAL_REST_API_KEY,
+});
+  const apiInstance = new Onesignal.DefaultApi(configuration);
+  const notification = new Onesignal.Notification();
+notification.app_id = String(process.env.ONESIGNAL_APP_ID);
+notification.contents = { en: 'Your submission has been approved, and you have been awarded 100 points!' };
+notification.headings = { en: 'Submission Approved!' };
+notification.include_aliases = { external_id: [String(user.id)] } as any;
+notification.target_channel = 'push';
+notification.idempotency_key = randomUUID();
+try {
+  const response = await apiInstance.createNotification(notification);
+  if (!response.id) {
+    console.warn("Notification was not sent:", response.errors);
+  } else if (response.errors) {
+    console.log("Notification created:", response.id, "(partial failures:", response.errors, ")");
+  } else {
+    console.log("Notification created:", response.id);
+  }
+} catch (e) {
+  if (e instanceof Onesignal.ApiException) {
+    // `e.errorMessages` flattens any error-envelope shape to a `string[]`;
+    // the raw parsed body remains on `e.body`.
+    console.error("createNotification failed: HTTP " + e.code, e.errorMessages);
+  } else {
+    throw e;
+  }
   res.send("Submission approved and user points updated.");
 }
