@@ -26,5 +26,36 @@ services:
         sync: false # you'll fill this in after the first deploy
       - key: WASP_WEB_CLIENT_URL
         sync: false # you'll fill this in after the first deploy
+        value: https://ecopulse.dev
+      - key: NODE_VERSION
+        value: "24"
+
+  - type: web
+    name: ecopulse-server-dev
+    runtime: node
+    plan: free
+    region: oregon
+    branch: staging
+    buildCommand: >-
+      export NPM_CONFIG_PREFIX=$HOME/.npm-global &&
+      export PATH="$NPM_CONFIG_PREFIX/bin:$PATH" &&
+      npm install -g @wasp.sh/wasp-cli@0.25 &&
+      wasp install &&
+      wasp build &&
+      cd .wasp/out/server &&
+      npm install &&
+      npx prisma generate --schema=../db/schema.prisma &&
+      npm run bundle
+    startCommand: cd .wasp/out/server && npm run start-production
+    envVars:
+      - key: DATABASE_URL
+        sync: false # you'll fill this in after the first deploy
+      - key: JWT_SECRET
+        generateValue: true
+      - key: WASP_SERVER_URL
+        sync: false # you'll fill this in after the first deploy
+      - key: WASP_WEB_CLIENT_URL
+        sync: false # you'll fill this in after the first deploy
+        value: https://ecopulse-dev.vercel.app
       - key: NODE_VERSION
         value: "24"
