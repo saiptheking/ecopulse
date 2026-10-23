@@ -49,7 +49,8 @@ export const uploadFile: UploadFile = async (req, res, context) => {
       <p>To approve this submission, click the link below:</p>
       <a href="${approvalUrl}">Approve Submission</a>
     `,
-  })
+    replyTo: "mail@ecopulse.dev"
+  }as any)
   const dbUser = await context.entities.User.findUnique({
     where: { id: user.id },
   });

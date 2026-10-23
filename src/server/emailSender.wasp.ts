@@ -31,6 +31,6 @@ export const emailSender: EmailSender = {
   defaultFrom: {
     name: "Eco Pulse", // → "Eco Pulse"
     // When using a real provider, e.g. SendGrid, you must use the same email address that you configured your account to send out emails with!
-    email: "hello@ecopulse.dev", // → an address you control, once you go live
+    email: "hello@mail.ecopulse.dev", // → an address you control, once you go live
   },
 };
