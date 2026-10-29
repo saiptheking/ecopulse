@@ -10,6 +10,7 @@
     "@aws-sdk/s3-presigned-post": "^3.750.0",
     "@aws-sdk/s3-request-presigner": "^3.523.0",
     "@google-analytics/data": "4.1.0",
+    "@vercel/analytics": "^2.0.1",
     "@hookform/resolvers": "^5.1.1",
     "@lemonsqueezy/lemonsqueezy.js": "^3.2.0",
     "@onesignal/node-onesignal": "^5.19.0",

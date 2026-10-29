@@ -32,6 +32,7 @@ import {
   staticNavigationItems,
 } from "./components/NavBar/constants";
 import { CookieConsentBanner } from "./components/cookie-consent/Banner";
+import { Analytics } from '@vercel/analytics/react';
 
 /**
  * use this component to wrap all child components
@@ -123,6 +124,8 @@ export function App() {
       <Toaster position="bottom-right" />
       {/* GDPR-style cookie consent banner */}
       <CookieConsentBanner />
+      {/* Vercel Web Analytics */}
+      <Analytics />
     </>
   );
 }
