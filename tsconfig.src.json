@@ -24,7 +24,10 @@
     "skipLibCheck": true,
     "allowJs": true,
     "outDir": ".wasp/out/user",
-    "types": ["react", "node"]
+    "types": ["react", "node"],
+    "paths": {
+    "src/*": ["./src/*"]
+}
   },
   "include": ["src"],
   "exclude": ["**/*.wasp.ts"]

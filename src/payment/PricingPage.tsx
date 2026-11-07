@@ -16,7 +16,7 @@ import {
   CardFooter,
   CardTitle,
 } from "../client/components/ui/card";
-import { cn } from "../client/utils";
+import { cn } from "../client/lib/utils";
 import {
   PaymentPlanId,
   paymentPlans,

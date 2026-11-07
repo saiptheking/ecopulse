@@ -1,5 +1,8 @@
 import { type Task } from "wasp/entities";
-
+import { Card3D, Card3DItem } from "../components/velora/3d-card";
+import { MagneticButton } from "../components/velora/magnetic-button";
+import { HyperText } from "../components/velora/hyper-text";
+import { RainbowButton } from "../components/velora/rainbow-button";
 import {
   createTask,
   deleteTask,
@@ -16,7 +19,7 @@ import {
 } from "../client/components/ui/card";
 import { Checkbox } from "../client/components/ui/checkbox";
 import { Input } from "../client/components/ui/input";
-import { cn } from "../client/utils";
+import { cn } from "../client/lib/utils";
 import type {
   GeneratedSchedule,
   Task as ScheduleTask,
@@ -33,9 +36,6 @@ export function FeedPage() {
             Challenges
           </h2>
         </div>
-        <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-lg leading-8">
-          Under development challenges page!
-        </p>
         {/* begin AI-powered Todo List */}
         <Card className="bg-muted/10 my-8">
           <CardContent className="mx-auto my-8 space-y-10 px-6 py-10 sm:w-[90%] md:w-[70%] lg:w-[50%]">
@@ -70,9 +70,9 @@ export function NewTaskForm({
   return (
       
         <div className="flex flex-col">
-          <h3 className="text-foreground mb-4 text-lg font-semibold">
+          <HyperText className="text-foreground mb-4 text-lg font-semibold">
             Challenge Feed
-          </h3>
+          </HyperText>
           <Schedule schedule={response} />
         </div>
   );
@@ -118,24 +118,7 @@ function Todo({ id, isDone, description, time }: TodoProps) {
             </span>
           </div>
           <div className="flex items-center gap-2">
-            <Input
-              id="time"
-              type="number"
-              min={0.5}
-              step={0.5}
-              className={cn("w-18 h-8 text-center text-xs", {
-                "pointer-events-none opacity-50": isDone,
-              })}
-              value={time}
-              onChange={handleTimeChange}
-            />
-            <span
-              className={cn("text-muted-foreground text-xs italic", {
-                "text-muted-foreground": isDone,
-              })}
-            >
               hrs
-            </span>
           </div>
         </div>
         <div className="w-15 flex items-center justify-end">
@@ -207,31 +190,32 @@ function TaskCard({
       : taskPriorityToColorMap[task.priority];
 
   return (
-    <Card className={cn("border-2", priorityColor)}>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center justify-between text-base">
+    <Card3D cardClassName={cn("border-2", priorityColor, "rounded-2xl bg-card p-6 shadow-md")}>
+        <Card3DItem depth={50} className="flex items-center justify-between text-base pb-3">
           <span>{task.name}(5kg CO2 Saved)</span>
-          {task.time !== undefined && (
-            <span className="text-muted-foreground text-xs font-normal">
-              {task.time} hrs
-            </span>
-          )}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="pt-0">
+        </Card3DItem>
+        <Card3DItem depth={90}>
         {task.description && (
           <p className="text-muted-foreground mb-3 text-sm">{task.description}</p>
         )}
+        </Card3DItem>
         <div className="text-muted-foreground text-center">
+          <Card3DItem depth={70}>
           <p>Want to participate? Upload your photo!</p>
+          </Card3DItem>
+          <Card3DItem depth={80}>
           <a href="/file-upload">
-          <button type="button" className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded-md">
+          <RainbowButton className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded-md"   style={{
+    "--brand-from": "#19a74d",
+    "--brand-via": "#146733",
+    "--brand-to": "#114323",
+  } as React.CSSProperties}>
             Upload Photo
-          </button>
+          </RainbowButton>
           </a>
+          </Card3DItem>
         </div>
-      </CardContent>
-    </Card>
+    </Card3D>
   );
 }
 

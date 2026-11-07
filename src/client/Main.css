@@ -1,5 +1,6 @@
 @import "tailwindcss";
-
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 @plugin "tailwindcss-animate";
@@ -145,7 +146,101 @@
       transform: rotate(0deg);
     }
   }
-}
+
+  --animate-marquee: marquee var(--duration, 40s) linear infinite;
+
+  --animate-marquee-vertical: marquee-vertical var(--duration, 40s) linear infinite
+;
+  @keyframes marquee {
+  from {
+    transform: translateX(0);}
+  to {
+    transform: translateX(calc(-100% - var(--gap)));}}
+  @keyframes marquee-vertical {
+  from {
+    transform: translateY(0);}
+  to {
+    transform: translateY(calc(-100% - var(--gap)));}}
+  --color-brand: var(--brand);
+  --color-brand-from: var(--brand-from);
+  --color-brand-via: var(--brand-via);
+  --color-brand-to: var(--brand-to);
+  --animate-aurora-1: aurora-1 14s ease-in-out infinite alternate;
+  --animate-aurora-2: aurora-2 18s ease-in-out infinite alternate;
+  --animate-aurora-3: aurora-3 22s ease-in-out infinite alternate;
+  --animate-orbit: orbit calc(var(--duration) * 1s) linear infinite;
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;}
+    to {
+      height: var(--radix-accordion-content-height);}}
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);}
+    to {
+      height: 0;}}
+  @keyframes aurora-1 {
+  0% {
+    transform: translate(-10%, -12%) scale(1);}
+  50% {
+    transform: translate(12%, 8%) scale(1.25);}
+  100% {
+    transform: translate(-6%, 14%) scale(0.95);}}
+  @keyframes aurora-2 {
+  0% {
+    transform: translate(12%, 10%) scale(1.1);}
+  50% {
+    transform: translate(-14%, -6%) scale(0.9);}
+  100% {
+    transform: translate(8%, -12%) scale(1.2);}}
+  @keyframes aurora-3 {
+  0% {
+    transform: translate(0%, 16%) scale(0.95);}
+  50% {
+    transform: translate(10%, -10%) scale(1.15);}
+  100% {
+    transform: translate(-12%, 4%) scale(1);}}
+  @keyframes orbit {
+  0% {
+    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * -1px)) rotate(calc(var(--angle) * -1deg));}
+  100% {
+    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * -1px)) rotate(calc((var(--angle) * 1deg + 360deg) * -1));}}
+  --animate-moving-border: moving-border var(--mb-duration, 4s) linear infinite;
+  @keyframes moving-border {
+  from {
+    offset-distance: 0%;}
+  to {
+    offset-distance: 100%;}}
+  --animate-shimmer: shimmer 2.5s linear infinite;
+  @keyframes shimmer {
+  from {
+    background-position: 200% 0;}
+  to {
+    background-position: -200% 0;}}
+  --animate-gradient: gradient 6s ease infinite;
+  @keyframes gradient {
+  0%, 100% {
+    background-position: 0% 50%;}
+  50% {
+    background-position: 100% 50%;}}
+  --animate-rainbow: rainbow var(--rainbow-duration, 4s) linear infinite;
+  @keyframes rainbow {
+  from {
+    background-position: 0% 50%;}
+  to {
+    background-position: 200% 50%;}}
+  --animate-ripple: ripple 600ms ease-out forwards;
+  @keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.35;}
+  to {
+    transform: scale(1);
+    opacity: 0;}}}
 
 @layer base {
   *,
@@ -330,3 +425,15 @@
 .apexcharts-xaxistooltip-bottom:before {
   @apply dark:border-b-muted!;
 }
+
+:root {
+  --brand: oklch(0.546 0.245 263);
+  --brand-from: oklch(0.546 0.245 263);
+  --brand-via: oklch(0.623 0.214 260);
+  --brand-to: oklch(0.685 0.169 237);}
+
+.dark {
+  --brand: oklch(0.623 0.214 260);
+  --brand-from: oklch(0.623 0.214 260);
+  --brand-via: oklch(0.707 0.165 255);
+  --brand-to: oklch(0.746 0.16 233);}
