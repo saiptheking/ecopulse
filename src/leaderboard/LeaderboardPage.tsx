@@ -4,7 +4,9 @@ import {
   CardHeader,
   CardTitle,
 } from "../client/components/ui/card";
-import { cn } from "../client/utils";
+import { WobbleCard } from "../components/velora/wobble-card";
+import { cn } from "../client/lib/utils";
+import { RippleButton } from "../components/velora/ripple-button";
 import { useState } from "react";
 import { getUserNames, useQuery } from "wasp/client/operations";
 export function LeaderboardPage() {
@@ -17,7 +19,6 @@ export function LeaderboardPage() {
           </h2>
         </div>
         <p className="text-muted-foreground mx-auto mt-6 max-w-2xl text-center text-lg leading-8">
-          Under development leaderboard page!
         </p>
             <LeaderboardContent />
       </div>
@@ -32,10 +33,10 @@ function LeaderboardContent() {
       <div className="flex flex-col gap-6 py-0" data-testid="schedule">
         <h2 className="text-4xl font-bold sm:text-4xl text-center mt-0">{grade === null ? "All Grades" : `${grade}th Grade`}</h2>
         <div className="flex justify-center gap-4"> 
-          <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(9)}}>9th Grade</button>
-          <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(10)}}>10th Grade</button>
-          <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(11)}}>11th Grade</button>
-          <button className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2" onClick={() => {setGrade(12)}}>12th Grade</button>
+          <RippleButton className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2 bg-card" onClick={() => {setGrade(9)}}>9th Grade</RippleButton>
+          <RippleButton className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2 bg-card" onClick={() => {setGrade(10)}}>10th Grade</RippleButton>
+          <RippleButton className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2 bg-card" onClick={() => {setGrade(11)}}>11th Grade</RippleButton>
+          <RippleButton className="px-4 py-2  text-primary-foreground rounded-2xl 10 border-success/20 text-success border-2 bg-card" onClick={() => {setGrade(12)}}>12th Grade</RippleButton>
         </div>
           {[...users].filter((user) => grade === null ? true : user.grade === grade).toSorted((a, b) => b.points - a.points).map((user) => (
             <LeaderboardEntry key={user.name} name={user.name} points={user.points} grade={user.grade} rank={++rank} />
@@ -45,7 +46,7 @@ function LeaderboardContent() {
 }
 function LeaderboardEntry({ name, points, grade, rank }: { name: string | null; points: number; grade: number | null; rank: number }) {
   return (
-    <Card className={cn("border-2", "10 border-success/20 text-success")}>
+    <WobbleCard className={cn("border-2", "10 border-success/20 text-success rounded-2xl bg-card")} contentClassName="p-1 sm:p-4">
         <CardHeader className="pb-3" style={{padding: "20px"}}>
           
           <CardTitle className="flex flex-nowrap items-center justify-between text-base">
@@ -62,6 +63,6 @@ function LeaderboardEntry({ name, points, grade, rank }: { name: string | null; 
                     
           </CardTitle>
         </CardHeader>
-    </Card>
+    </WobbleCard>
   );
 }

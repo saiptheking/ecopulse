@@ -11,11 +11,14 @@
     "prefix": ""
   },
   "aliases": {
-    "lib": "src/client",
+    "lib": "src/client/lib",
     "components": "src/client/components",
     "ui": "src/client/components/ui",
-    "utils": "src/client/utils",
+    "utils": "src/client/lib/utils",
     "hooks": "src/client/hooks"
   },
-  "iconLibrary": "lucide"
+  "iconLibrary": "lucide",
+  "registries": {
+    "@velora": "https://velora.colorlib.com/r/{name}.json"
+  }
 }

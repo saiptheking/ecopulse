@@ -28,10 +28,12 @@ import { Toaster } from "../client/components/ui/toaster";
 import "./Main.css"; // global CSS (Tailwind + custom styles)
 import { NavBar } from "./components/NavBar/NavBar";
 import OneSignal from 'react-onesignal';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import {
   staticNavigationItems,
 } from "./components/NavBar/constants";
 import { CookieConsentBanner } from "./components/cookie-consent/Banner";
+import { Analytics } from '@vercel/analytics/react';
 
 /**
  * use this component to wrap all child components
@@ -123,6 +125,9 @@ export function App() {
       <Toaster position="bottom-right" />
       {/* GDPR-style cookie consent banner */}
       <CookieConsentBanner />
+      {/* Vercel Web Analytics */}
+      <Analytics />
+      <SpeedInsights />
     </>
   );
 }
