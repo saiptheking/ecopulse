@@ -28,6 +28,7 @@ import { Toaster } from "../client/components/ui/toaster";
 import "./Main.css"; // global CSS (Tailwind + custom styles)
 import { NavBar } from "./components/NavBar/NavBar";
 import OneSignal from 'react-onesignal';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 import {
   staticNavigationItems,
 } from "./components/NavBar/constants";
@@ -126,6 +127,7 @@ export function App() {
       <CookieConsentBanner />
       {/* Vercel Web Analytics */}
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }
