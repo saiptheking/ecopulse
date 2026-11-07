@@ -60,6 +60,7 @@ import { emailSender } from "./src/server/emailSender.wasp"; // email provider (
 import { userSpec } from "./src/user/user.wasp"; // account page + admin-fields ops (KEEP)
 import { api, apiNamespace} from "@wasp.sh/spec"
 import { configureFileUploadMiddleware, uploadFile, approveSubmission } from "./src/apis" with { type: "ref" }
+import { getGlobalMiddleware } from "./src/server/middleware" with { type: "ref" };
 
 export default app({
   name: "EcoPulse", // → change to "EcoPulse"
@@ -81,6 +82,7 @@ export default app({
   server: {
     // Boot-time validation of your secret env vars (see src/env.ts).
     envValidationSchema: serverEnvValidationSchema,
+    middlewareConfigFn: getGlobalMiddleware,
   },
   emailSender,
   spec: [
