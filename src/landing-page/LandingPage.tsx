@@ -48,7 +48,6 @@ export function LandingPage() {
         {/* JSX ORDER == ON-SCREEN ORDER. Read top to bottom: */}
         <Hero />
       </main>
-      <Footer footerNavigation={footerNavigation} />
     </div>
   );
 }

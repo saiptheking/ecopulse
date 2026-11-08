@@ -8,6 +8,7 @@ import {
   deleteTask,
   updateTask,
 } from "wasp/client/operations";
+import { Link as WaspRouterLink, routes } from "wasp/client/router";
 import { Trash2 } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Button } from "../client/components/ui/button";
@@ -194,25 +195,20 @@ function TaskCard({
         <Card3DItem depth={50} className="flex items-center justify-between text-base pb-3">
           <span>{task.name}(5kg CO2 Saved)</span>
         </Card3DItem>
-        <Card3DItem depth={90}>
-        {task.description && (
-          <p className="text-muted-foreground mb-3 text-sm">{task.description}</p>
-        )}
-        </Card3DItem>
         <div className="text-muted-foreground text-center">
           <Card3DItem depth={70}>
           <p>Want to participate? Upload your photo!</p>
           </Card3DItem>
           <Card3DItem depth={80}>
-          <a href="/file-upload">
           <RainbowButton className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded-md"   style={{
     "--brand-from": "#19a74d",
     "--brand-via": "#146733",
     "--brand-to": "#114323",
   } as React.CSSProperties}>
+            <WaspRouterLink to={routes.FileUploadRoute.to}>
             Upload Photo
+            </WaspRouterLink>
           </RainbowButton>
-          </a>
           </Card3DItem>
         </div>
     </Card3D>

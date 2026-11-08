@@ -23,6 +23,7 @@
 import { useEffect, useMemo } from "react";
 import { Outlet, useLocation } from "react-router";
 import { routes } from "wasp/client/router";
+import { FloatingNavbar } from "../components/velora/floating-navbar";
 import { useAuth } from 'wasp/client/auth';
 import { Toaster } from "../client/components/ui/toaster";
 import "./Main.css"; // global CSS (Tailwind + custom styles)
@@ -34,7 +35,7 @@ import {
 } from "./components/NavBar/constants";
 import { CookieConsentBanner } from "./components/cookie-consent/Banner";
 import { Analytics } from '@vercel/analytics/react';
-
+import { MenuItem, NavbarMenu } from "../components/velora/navbar-menu";
 /**
  * use this component to wrap all child components
  * this is useful for templates, themes, and context
@@ -121,6 +122,13 @@ export function App() {
           </>
         )}
       </div>
+      <FloatingNavbar className="bottom-4 left-1/2 right-auto top-auto w-max -translate-x-1/2 justify-center p-1">
+       <NavbarMenu className="border-0 bg-transparent p-0 shadow-none backdrop-blur-none">
+        <MenuItem label="Feed" href={routes.FeedRoute.to} />
+        <MenuItem label="Leaderboard" href={routes.LeaderboardRoute.to} />
+        <MenuItem label="Account" href={routes.AccountRoute.to} />
+      </NavbarMenu>
+      </FloatingNavbar>
       {/* Pop-up notifications (success/error toasts) — rendered app-wide */}
       <Toaster position="bottom-right" />
       {/* GDPR-style cookie consent banner */}
@@ -128,6 +136,7 @@ export function App() {
       {/* Vercel Web Analytics */}
       <Analytics />
       <SpeedInsights />
+     
     </>
   );
 }

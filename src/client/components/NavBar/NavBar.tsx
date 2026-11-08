@@ -129,14 +129,7 @@ export function NavBar({
                 </span>
               </WaspRouterLink>
 
-              <ul className="ml-4 hidden items-center gap-6 lg:flex">
-                {renderNavigationItems(navigationItems)}
-              </ul>
             </div>
-            <NavBarMobileMenu
-              isScrolled={isScrolled}
-              navigationItems={navigationItems}
-            />
             <NavBarDesktopUserDropdown isScrolled={isScrolled} />
           </nav>
         </div>
@@ -149,37 +142,10 @@ function NavBarDesktopUserDropdown({ isScrolled }: { isScrolled: boolean }) {
   const { data: user, isLoading: isUserLoading } = useAuth();
 
   return (
-    <div className="hidden items-center justify-end gap-3 lg:flex lg:flex-1">
+    <div className="items-center justify-end gap-3">
       <ul className="flex items-center justify-center gap-2 sm:gap-4">
         <DarkModeSwitcher />
       </ul>
-      {isUserLoading ? null : !user ? (
-        <WaspRouterLink
-          to={routes.LoginRoute.to}
-          className={cn(
-            "ml-3 font-semibold leading-6 transition-all duration-300",
-            {
-              "text-sm": !isScrolled,
-              "text-xs": isScrolled,
-            },
-          )}
-        >
-          <div className="text-foreground hover:text-primary flex items-center transition-colors duration-300 ease-in-out">
-            Log in{" "}
-            <LogIn
-              size={isScrolled ? "1rem" : "1.1rem"}
-              className={cn("transition-all duration-300", {
-                "ml-1 mt-[0.1rem]": !isScrolled,
-                "ml-1": isScrolled,
-              })}
-            />
-          </div>
-        </WaspRouterLink>
-      ) : (
-        <div className="ml-3">
-          <UserDropdown user={user} />
-        </div>
-      )}
     </div>
   );
 }
