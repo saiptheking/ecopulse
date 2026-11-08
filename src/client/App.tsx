@@ -113,6 +113,7 @@ export function App() {
           <Outlet />
         ) : (
           <>
+<NavBar />
             <div className="max-w-(--breakpoint-2xl) mx-auto">
               <Outlet />
             </div>
