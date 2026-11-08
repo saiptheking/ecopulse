@@ -32,6 +32,7 @@ import {
   CardHeader,
   CardTitle,
 } from "../client/components/ui/card";
+import { DarkModeSwitcher } from "../client/components/DarkModeSwitcher";
 import { Separator } from "../client/components/ui/separator";
 import {
   PaymentPlanId, // 🔥 payment — remove later
@@ -45,10 +46,11 @@ export function AccountPage({ user }: { user: User }) {
   return (
     <div className="mt-10 px-6">
       <Card className="mb-4 lg:m-8">
-        <CardHeader>
+        <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle className="text-foreground text-base font-semibold leading-6">
             Account Information
           </CardTitle>
+          <DarkModeSwitcher />
         </CardHeader>
         <CardContent className="p-0">
           <div className="space-y-0">
