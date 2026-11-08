@@ -92,12 +92,15 @@ export function App() {
             const medianOneSignal = window.median?.onesignal;
       if (medianOneSignal) {
         try {
-        const result = await medianOneSignal.login(user.id)
+        const result = await medianOneSignal.login(user.id);
+        const email = await medianOneSignal.User.addEmail(String(user.email));
         } catch (error) {
           console.error("Error logging in user with OneSignal:", error);
         }
         } else {
           await OneSignal.login(String(user.id));
+          await OneSignal.User.addEmail(String(user.email));
+
         }
       }
     void initializeOneSignal();
