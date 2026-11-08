@@ -24,12 +24,13 @@ import { type App } from "@wasp.sh/spec";
 export const head: App["head"] = [
   "<link rel='icon' href='https://www.svgrepo.com/show/513512/leaf.svg' />", // browser-tab icon
   // ── SEO: what search engines show under your app's name ──
-  "<meta name='description' content='A gamified environmental action platform' />", // → write a real one for Eco Pulse
+  "<meta name='description' content='EcoPulse aims to empower students to understand their eco-impact on the world around them by showing them the impact they produce while completing eco-challenges, while promoting environmentally friendly actions through points, leaderboards, and rewards.' />", // → write a real one for Eco Pulse
   "<meta name='author' content='Eco Pulse' />",
-  "<meta name='keywords' content='environment, sustainability, gamification' />", // → eco, environment, gamification
+  "<meta name='keywords' content='environment, sustainability, gamification, education, challenges, carbon, students, eco, rewards, points, leaderboards' />", // → eco, environment, gamification
   "<meta name='google-site-verification' content='OENn6OG9nct29VFTnJg-QMKAsYNwcAbR06kE_iR8R6o' />",
   // ── Open Graph: the preview card when someone shares your URL ──
   "<meta property='og:type' content='website' />",
+  "<link rel='canonical' href='https://ecopulse.dev' />",
   "<meta property='og:title' content='Eco Pulse' />", // → "Eco Pulse"
   "<meta property='og:site_name' content='Eco Pulse' />",
   "<meta property='og:url' content='https://ecopulse.dev' />", // → your real domain
