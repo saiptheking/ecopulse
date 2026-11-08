@@ -111,8 +111,7 @@ export function NavBar({
             aria-label="Global"
           >
             <div className="flex items-center gap-6">
-              <WaspRouterLink
-                to={routes.LandingPageRoute.to}
+              <div
                 className="text-foreground hover:text-primary flex items-center transition-colors duration-300 ease-in-out"
               >
                 <NavLogo isScrolled={isScrolled} />
@@ -127,7 +126,7 @@ export function NavBar({
                 >
                   Eco Pulse
                 </span>
-              </WaspRouterLink>
+              </div>
 
             </div>
             <NavBarDesktopUserDropdown isScrolled={isScrolled} />
