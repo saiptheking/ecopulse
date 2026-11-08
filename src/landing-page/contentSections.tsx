@@ -144,6 +144,10 @@ export const footerNavigation = {
     { name: "Privacy", href: "#" },
     { name: "Terms of Service", href: "#" },
   ],
+  social: [
+    { name: "Instagram", href: "https://www.instagram.com/ecopulse.sustainability/" },
+    { name: "TikTok", href: "https://www.tiktok.com/@ecopulse.sustainability" },
+  ]
 };
 
 // ── Carousel slides (🔥 screenshots of OTHER products — delete/replace) ───

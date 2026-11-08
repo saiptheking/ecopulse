@@ -27,13 +27,13 @@ const schema = {
   "@graph": [
     {
       "@type": "SoftwareApplication",
-      "@id": "https://your-saas-app.com/#software", // 🔥 → ecopulse real URL
-      name: "Your Open SaaS App", // 🔥 → "Eco Pulse"
-      description: "Your apps main description and features.", // 🔥 → real pitch
-      url: "https://your-saas-app.com", // 🔥
+      "@id": "https://ecopulse.dev", // 🔥 → ecopulse real URL
+      name: "EcoPulse", // 🔥 → "Eco Pulse"
+      description: "A gamified student-centered eco-rewards platform", // 🔥 → real pitch
+      url: "https://ecopulse.dev", // 🔥
       applicationCategory: "BusinessApplication", // 🔥 → "LifestyleApplication"?
       operatingSystem: "Cross-platform",
-      image: "https://your-saas-app.com/public-banner.webp", // 🔥
+      image: "https://ecopulse.dev/public-banner.webp", // 🔥
       offers: {
         "@type": "Offer",
         price: "0",
@@ -42,10 +42,10 @@ const schema = {
     },
     {
       "@type": "WebSite",
-      "@id": "https://your-saas-app.com/#website", // 🔥
-      url: "https://your-saas-app.com", // 🔥
-      name: "Your Open SaaS App", // 🔥 → "Eco Pulse"
-      description: "Your apps main description and features.", // 🔥
+      "@id": "https://ecopulse.dev/#website", // 🔥
+      url: "https://ecopulse.dev", // 🔥
+      name: "Eco Pulse", // 🔥 → "Eco Pulse"
+      description: "A gamified student-centered eco-rewards platform", // 🔥
     },
   ],
 };

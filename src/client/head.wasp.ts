@@ -23,7 +23,6 @@ import { type App } from "@wasp.sh/spec";
 
 export const head: App["head"] = [
   "<link rel='icon' href='https://www.svgrepo.com/show/513512/leaf.svg' />", // browser-tab icon
-
   // ── SEO: what search engines show under your app's name ──
   "<meta name='description' content='A gamified environmental action platform' />", // → write a real one for Eco Pulse
   "<meta name='author' content='Eco Pulse' />",
@@ -33,9 +32,8 @@ export const head: App["head"] = [
   "<meta property='og:type' content='website' />",
   "<meta property='og:title' content='Eco Pulse' />", // → "Eco Pulse"
   "<meta property='og:site_name' content='Eco Pulse' />",
-  "<meta property='og:url' content='https://ecopulse-dev.vercel.app' />", // → your real domain
+  "<meta property='og:url' content='https://ecopulse.dev' />", // → your real domain
   "<meta property='og:description' content='A gamified environmental action platform' />",
-  "<meta property='og:image' content='https://your-saas-app.com/public-banner.webp' />", // → your banner image
   "<script src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js' defer></script>",
   "<script src='/onesignal-init.js' defer></script>",
   "<script src='https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js' defer></script>",

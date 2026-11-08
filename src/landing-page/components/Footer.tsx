@@ -25,6 +25,7 @@ export function Footer({
   footerNavigation: {
     app: NavigationItem[];
     company: NavigationItem[];
+    social: NavigationItem[];
   };
 }) {
   return (
@@ -45,6 +46,24 @@ export function Footer({
             </h3>
             <ul role="list" className="mt-6 space-y-4">
               {footerNavigation.company.map((item) => (
+                <li key={item.name}>
+                  <a
+                    href={item.href}
+                    className="text-sm leading-6 text-gray-600 hover:text-gray-900 dark:text-white"
+                  >
+                    {item.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          {/* Column 3: "Social" links */}
+          <div>
+            <h3 className="text-sm font-semibold leading-6 text-gray-900 dark:text-white">
+              Social
+            </h3>
+            <ul role="list" className="mt-6 space-y-4">
+              {footerNavigation.social.map((item) => (
                 <li key={item.name}>
                   <a
                     href={item.href}
