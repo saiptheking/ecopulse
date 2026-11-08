@@ -4,7 +4,7 @@ import { config, type MiddlewareConfigFn } from "wasp/server";
 export const getGlobalMiddleware: MiddlewareConfigFn = (middlewareConfig) => {
   const allowedOrigins = [
     ...config.allowedCORSOrigins,
-    "https://ecopulse-dev.vercel.app",
+    "https://ecopulse-mobile.vercel.app",
     "https://ecopulse.dev",
   ];
 
