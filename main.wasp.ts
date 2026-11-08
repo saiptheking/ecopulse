@@ -63,9 +63,9 @@ import { configureFileUploadMiddleware, uploadFile, approveSubmission } from "./
 import { getGlobalMiddleware } from "./src/server/middleware" with { type: "ref" };
 
 export default app({
-  name: "EcoPulse Gamified Eco Rewards Platform", // → change to "EcoPulse"
+  name: "EcoPulse", // → change to "EcoPulse"
   wasp: { version: "^0.25.0" },
-  title: "EcoPulse Gamified Eco Rewards Platform", // → change to "Eco Pulse"
+  title: "EcoPulse | Gamified Eco-Rewards Platform", // → change to "Eco Pulse"
   head,
   auth: authConfig,
   db: {
