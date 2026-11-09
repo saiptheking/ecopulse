@@ -99,9 +99,13 @@ export function App() {
           console.error("Error logging in user with OneSignal:", error);
         }
         } else {
-          await OneSignal.login(String(user.id));
-          await OneSignal.User.addEmail(String(user.email));
-          await OneSignal.User.addSms(String(user.phone));
+          try {
+            await OneSignal.login(String(user.id));
+            await OneSignal.User.addEmail(String(user.email));
+            await OneSignal.User.addSms(String(user.phone));
+          } catch (error) {
+            console.error("Error logging in user with OneSignal:", error);
+          }
 
         }
       }
