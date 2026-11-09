@@ -40,7 +40,17 @@ export function SignupPage() {
               min: { value: 9, message: "Grade must be at least 9" },
               max: { value: 12, message: "Grade must be at most 12" }
             }
-        }]}
+        },
+        {
+            name: "phone",
+            label: "Phone Number",
+            type: "input",
+            validations: { 
+              min: { value: 10, message: "Phone number must be at least 10 digits" },
+              max: { value: 15, message: "Phone number must be at most 15 digits" }
+            }
+        },
+        ]}
       />
       <br />
       <span className="text-sm font-medium text-gray-900">
