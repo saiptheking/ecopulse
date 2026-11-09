@@ -56,7 +56,11 @@ const nameDataSchema = z.object({
 const gradeDataSchema = z.object({
   grade: z.coerce.number().int().min(9).max(12),
 });
-
+const phoneDataSchema = z.object({
+  phone: z.string().refine((value) => /^\+[1-9]\d{1,14}$/.test(value),
+      "Phone number must be in E.164 format."
+    ),
+});
 // ★ THE ACTIVE ONE — how every normal signup fills the User row:
 export const getEmailUserFields = defineUserSignupFields({
   name: (data) => {
@@ -75,7 +79,10 @@ export const getEmailUserFields = defineUserSignupFields({
     const emailData = emailDataSchema.parse(data);
     return emailData.email; // username column = the email (simplest approach)
   },
-  
+  phone: (data) => {
+    const phoneData = phoneDataSchema.parse(data);
+    return phoneData.phone;
+  },
   isAdmin: (data) => {
     const emailData = emailDataSchema.parse(data);
     return isAdminEmail(emailData.email); // power users by env var
