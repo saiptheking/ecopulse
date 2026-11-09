@@ -5,6 +5,10 @@ declare global {
     median?: {
       onesignal?: {
         login(externalId: string): unknown;
+        User: {
+          addEmail(email: string): unknown;
+          addSms(phone: string): unknown;
+        };
       };
     };
   }

@@ -64,6 +64,7 @@ model User {
   name                      String?         
   email                     String?         @unique // used to log in (Dummy provider in dev)
   username                  String?         @unique // used to log in (Dummy provider in dev)
+  phone                     String?         @unique
   isAdmin                   Boolean         @default(false) // controls /admin access (KEEP!)
   grade                     Int             @default(9)
   points                    Int             @default(0)
